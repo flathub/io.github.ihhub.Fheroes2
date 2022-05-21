@@ -37,8 +37,13 @@ modules:
           tag-pattern: ^([\d.]+)$
       - type: file
         path: fheroes2.appdata.xml
+      - type: extra-data
+        filename: h2demo.zip
+        url: https://archive.org/download/HeroesofMightandMagicIITheSuccessionWars_1020/h2demo.zip
+        sha256: 12048c8b03875c81e69534a3813aaf6340975e77b762dc1b79a4ff5514240e3c
+        size: 21848903
       - type: script
         dest-filename: fheroes2.sh
         commands:
-          - ls ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/DATA/HEROES2.AGG || zenity --error --text "To play fheroes2 you will need to copy the 'ANIM', 'DATA', 'MAPS' and 'MUSIC' folders from Heroes II to the fheroes2 folder ('~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2')." --ok-label "Close" --width=400
+          - ls ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/*[Dd][Aa][Tt][Aa]*/HEROES2.AGG || zenity --question --text "To play fheroes2 you will need to copy the 'ANIM', 'DATA', 'MAPS' and 'MUSIC' folders from Heroes II to the fheroes2 folder.\n\nFor example:\n~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/ANIM\n~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/DATA\n~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/MAPS\n~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/MUSIC\n\nAlternatively, the demo can be installed." --cancel-label "Install Demo" --ok-label "Close" --width=400 || unzip -q /app/extra/h2demo.zip -d  ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2
           - /app/bin/fheroes2
