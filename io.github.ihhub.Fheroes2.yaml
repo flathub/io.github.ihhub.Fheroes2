@@ -22,21 +22,16 @@ modules:
     config-opts:
         - "-DSDL2MAIN_LIBRARY="
     post-install:
-        - install -Dm644 fheroes2.appdata.xml -t ${FLATPAK_DEST}/share/metainfo/
-        - install -Dm644 script/packaging/common/fheroes2.desktop -t ${FLATPAK_DEST}/share/applications/
         - desktop-file-edit --set-key=Exec --set-value=fheroes2.sh ${FLATPAK_DEST}/share/applications/fheroes2.desktop
-        - install -Dm644 src/resources/fheroes2.png -t ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps/
         - install -Dm 744 fheroes2.sh -t /app/bin
     sources:
       - type: git
         url: https://github.com/ihhub/fheroes2
-        tag: 0.9.15
-        commit: 4ce7b1148b0c2ec4e5da67aeb79522942c7d6a95
+        tag: 0.9.16
+        commit: -------------------TDB-----------------------
         x-checker-data:
           type: git
           tag-pattern: ^([\d.]+)$
-      - type: file
-        path: fheroes2.appdata.xml
       - type: script
         dest-filename: fheroes2.sh
         commands:
