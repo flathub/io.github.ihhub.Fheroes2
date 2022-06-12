@@ -24,10 +24,7 @@ modules:
     config-opts:
       - -DSDL2MAIN_LIBRARY=
     post-install:
-      - install -Dm644 fheroes2.appdata.xml -t ${FLATPAK_DEST}/share/metainfo/
-      - install -Dm644 script/packaging/common/fheroes2.desktop -t ${FLATPAK_DEST}/share/applications/
       - desktop-file-edit --set-key=Exec --set-value=fheroes2.sh ${FLATPAK_DEST}/share/applications/fheroes2.desktop
-      - install -Dm644 src/resources/fheroes2.png -t ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps/
       - install -Dm 744 fheroes2.sh -t /app/bin
     sources:
       - type: git
@@ -37,8 +34,6 @@ modules:
         x-checker-data:
           type: git
           tag-pattern: ^([\d.]+)$
-      - type: file
-        path: fheroes2.appdata.xml
       - type: extra-data
         filename: h2demo.zip
         url: https://archive.org/download/HeroesofMightandMagicIITheSuccessionWars_1020/h2demo.zip
