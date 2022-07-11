@@ -29,8 +29,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/ihhub/fheroes2
-        tag: 0.9.16
-        commit: babac4a0ab6195ff87d2b553ee44a6003ef49349
+        tag: 0.9.17
+        commit: 19c31e76429dde54b7a1492da83d9cd10e84d7b2
         x-checker-data:
           type: git
           tag-pattern: ^([\d.]+)$
