@@ -9,8 +9,6 @@ finish-args:
   - --socket=x11
   # Pulseaudio access
   - --socket=pulseaudio
-  # OpenGL access
-  - --device=dri
   # File Manager
   - --talk-name=org.freedesktop.FileManager1.*
 command: fheroes2.sh
