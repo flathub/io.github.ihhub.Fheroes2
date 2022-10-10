@@ -9,8 +9,6 @@ finish-args:
   - --socket=x11
   # Pulseaudio access
   - --socket=pulseaudio
-  # OpenGL access
-  - --device=dri
   # File Manager
   - --talk-name=org.freedesktop.FileManager1.*
 command: fheroes2.sh
@@ -29,8 +27,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/ihhub/fheroes2
-        tag: 0.9.19
-        commit: 57eba30e2eb2d67004ffe586909d25bedd2a63df
+        tag: 0.9.20
+        commit: 27ec7781805b21b632c47c74466e134eee8126b7
         x-checker-data:
           type: git
           tag-pattern: ^([\d.]+)$
