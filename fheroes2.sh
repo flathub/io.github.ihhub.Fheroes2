@@ -7,7 +7,6 @@ then
     if zenity --question --text "Only the demo installed.\nWill be started automatically in 5 sec." --cancel-label "Start demo" --ok-label "Install full version" --timeout 5 ;
     then
       rm -rf ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/DATA
-      rm -rf ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/MAPS
       ./$(basename $0) && exit
     else
       /app/bin/fheroes2
