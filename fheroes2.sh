@@ -9,7 +9,7 @@ else
     --title "Complete installation of fheroes2" \
     --column "What to do?" \
       'Manual install    (HoMM2 files needed)' \
-      'Install GOG version    (installer-EXE needed)' \
+      'Install GOG version    (EXE installer file needed)' \
       'Install demo'
   2> /dev/null)
 
@@ -34,7 +34,8 @@ else
   fi
   if [[ $ans == *"Manual"* ]]; then
     zenity --info \
-      --text "You will need to copy the 'ANIM', 'DATA', 'MAPS' and 'MUSIC' folders from Heroes II to the fheroes2 folder.\n\nFor example:\n~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/ANIM\n~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/DATA\n~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/MAPS\n~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/MUSIC"
+      --text "You will need to copy the 'ANIM', 'DATA', 'MAPS' and 'MUSIC' folders from Heroes II to the fheroes2 folder.\n\nFor example:\n~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/ANIM\n~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/DATA\n~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/MAPS\n~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/MUSIC" \
+      --ok-label "Open folder"
     mkdir -p ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2
     dbus-send --session --print-reply --dest=org.freedesktop.FileManager1 \
       --type=method_call /org/freedesktop/FileManager1 org.freedesktop.FileManager1.ShowFolders \
