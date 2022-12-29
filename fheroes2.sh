@@ -2,7 +2,20 @@
 
 if ls ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/*[Dd][Aa][Tt][Aa]*/HEROES2.AGG 2> /dev/null ;
 then
-  /app/bin/fheroes2
+  if ls ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/*[Dd][Aa][Tt][Aa]*/H2OFFER.SMK 2> /dev/null ;
+  then
+    if zenity --question --text "Only the demo installed.\nWill be started automatically in 5 sec." --cancel-label "Start demo" --ok-label "Install full version" --timeout 5 ;
+    then
+      rm -rf ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/DATA
+      rm -rf ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/MAPS
+      ./$(basename $0)
+      exit
+    else
+      /app/bin/fheroes2
+    fi
+  else
+    /app/bin/fheroes2
+  fi
 else
   ans=$(zenity --list \
     --text "To play <a href='https://ihhub.github.io/fheroes2/'><b>fheroes2</b></a> you will need assets from the original game or <a href='https://www.gog.com/de/game/heroes_of_might_and_magic_2_gold_edition'>GOG</a>.\nAlternatively, the <a href='https://archive.org/details/HeroesofMightandMagicIITheSuccessionWars_1020'>demo</a> (only one scenario, no campaign and limited assets) can be installed." \
