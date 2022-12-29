@@ -38,6 +38,8 @@ else
       zenity --error --text "Extraction failed!"
       exit 1
     fi
+    mv ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/app/* ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/ 2> /dev/null
+    rm -rf ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/app/ 2> /dev/null
     /app/bin/fheroes2
   fi
   if [[ $ans == *"demo"* ]]; then
