@@ -40,6 +40,23 @@ modules:
       - type: file
         path: fheroes2.sh
         dest-filename: fheroes2.sh
+
+  # innoextract dependency
+  - name: boost
+    buildsystem: simple
+    build-commands:
+      - ./bootstrap.sh --prefix=/app --with-libraries=program_options,filesystem,system,thread,locale,date_time,atomic,iostreams
+      - ./b2
+      - ./b2 install
+    sources:
+      - sha256: 71feeed900fbccca04a3b4f2f84a7c217186f28a940ed8b7ed4725986baf99fa
+        type: archive
+        url: https://boostorg.jfrog.io/artifactory/main/release/1.81.0/source/boost_1_81_0.tar.bz2
+        x-checker-data:
+          type: anitya
+          project-id: 6845
+          stable-only: true
+          url-template: https://boostorg.jfrog.io/artifactory/main/release/$version/source/boost_${major}_${minor}_$patch.tar.bz2
   - name: innoextract
     buildsystem: cmake-ninja
     sources:
