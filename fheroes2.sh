@@ -8,8 +8,7 @@ then
     then
       rm -rf ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/DATA
       rm -rf ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/MAPS
-      ./$(basename $0)
-      exit
+      ./$(basename $0) && exit
     else
       /app/bin/fheroes2
     fi
