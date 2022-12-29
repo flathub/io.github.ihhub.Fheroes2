@@ -1,6 +1,6 @@
 app-id: io.github.ihhub.Fheroes2
 runtime: org.freedesktop.Platform
-runtime-version: '21.08'
+runtime-version: '22.08'
 sdk: org.freedesktop.Sdk
 finish-args:
   - --device=all
@@ -37,27 +37,17 @@ modules:
         url: https://archive.org/download/HeroesofMightandMagicIITheSuccessionWars_1020/h2demo.zip
         sha256: 12048c8b03875c81e69534a3813aaf6340975e77b762dc1b79a4ff5514240e3c
         size: 21848903
-      - type: script
+      - type: file
+        path: fheroes2.sh
         dest-filename: fheroes2.sh
-        commands:
-          - if ls ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/*[Dd][Aa][Tt][Aa]*/HEROES2.AGG
-            ;
-          - then
-          - /app/bin/fheroes2
-          - else
-          - if zenity --question --text "To play fheroes2 you will need to copy the
-            'ANIM', 'DATA', 'MAPS' and 'MUSIC' folders from Heroes II to the fheroes2
-            folder.\n\nFor example:\n~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/ANIM\n~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/DATA\n~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/MAPS\n~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/MUSIC\n\nAlternatively,
-            the demo (only one scenario, no campaign and limited assets) can be installed."
-            --cancel-label "Install Demo" --ok-label "Open folder" --width=400 ;
-          - then
-          - mkdir -p ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2
-          - dbus-send --session --print-reply --dest=org.freedesktop.FileManager1
-            --type=method_call /org/freedesktop/FileManager1 org.freedesktop.FileManager1.ShowFolders
-            array:string:"file://$HOME/.var/app/io.github.ihhub.Fheroes2/data/fheroes2"
-            string:""
-          - else
-          - unzip -o -q /app/extra/h2demo.zip "DATA/*" "MAPS/*" -d ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2
-          - /app/bin/fheroes2
-          - fi
-          - fi
+  - name: innoextract
+    buildsystem: cmake-ninja
+    sources:
+      - type: archive
+        url: https://github.com/dscharrer/innoextract/releases/download/1.9/innoextract-1.9.tar.gz
+        sha256: 6344a69fc1ed847d4ed3e272e0da5998948c6b828cb7af39c6321aba6cf88126
+        x-checker-data:
+          type: anitya
+          project-id: 8646
+          stable-only: true
+          url-template: https://github.com/dscharrer/innoextract/releases/download/$version/innoextract-$version.tar.gz
