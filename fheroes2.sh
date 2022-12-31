@@ -20,10 +20,10 @@ else
   ans=$(zenity --list \
     --text "To play <a href='https://ihhub.github.io/fheroes2/'><b>fheroes2</b></a> you will need assets from the original game or <a href='https://www.gog.com/de/game/heroes_of_might_and_magic_2_gold_edition'>GOG</a>.\nAlternatively, the <a href='https://archive.org/details/HeroesofMightandMagicIITheSuccessionWars_1020'>demo</a> (only one scenario, no campaign and limited assets) can be installed." \
     --title "Complete installation of fheroes2" \
-    --column "What to do?" \
-      'Install GOG version    (EXE installer file needed)' \
-      'Manual install    (HoMM2 files needed)' \
-      'Install demo'
+    --column "What to do?   " --column "Requirement   " --column "" \
+      'Install GOG version   ' 'EXE installer file   ' '(recommend)' \
+      'Manual install   ' 'HoMM2 files   ' '' \
+      'Install demo   ' '' ''
   2> /dev/null)
 
   if [[ $ans == *"GOG"* ]]; then
