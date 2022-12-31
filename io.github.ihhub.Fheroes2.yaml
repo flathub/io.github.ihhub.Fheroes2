@@ -68,3 +68,15 @@ modules:
           project-id: 8646
           stable-only: true
           url-template: https://github.com/dscharrer/innoextract/releases/download/$version/innoextract-$version.tar.gz
+  - name: bchunk
+    buildsystem: simple
+    build-commands:
+      - make install
+    sources:
+      - type: git
+        url: https://github.com/hessu/bchunk
+        tag: release/1.2.2
+        commit: 0c7009d1d2be1cc12edebf926010f417069b6211
+        x-checker-data:
+          type: git
+          tag-pattern: ([\d.]+)$
