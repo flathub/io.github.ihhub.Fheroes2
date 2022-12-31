@@ -71,7 +71,8 @@ modules:
   - name: bchunk
     buildsystem: simple
     build-commands:
-      - make install
+      - make
+      - install -Dm 744 bchunk -t /app/bin
     sources:
       - type: git
         url: https://github.com/hessu/bchunk
