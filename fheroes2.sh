@@ -31,7 +31,9 @@ else
       --include GAMES \
       --include MAPS \
       --include MUSIC \
+      --include ANIM \
       --include SOUND \
+      --include homm2.gog \
       $file
     if [[ $? -ne 0 ]]; then
       zenity --error --text "Extraction failed!"
@@ -39,6 +41,19 @@ else
     fi
     mv ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/app/* ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/ 2> /dev/null
     rm -rf ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/app/ 2> /dev/null
+    mv ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/HEROES2/* ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/ 2> /dev/null
+    rm -rf ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/HEROES2/ 2> /dev/null
+    
+    cd ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/
+    if ls homm2.gog 2> /dev/null ;
+    then
+      mkdir ANIM
+      printf 'FILE "homm2.gog" BINARY\n  TRACK 01 MODE2/2352\n    INDEX 01 00:00:00' > img.cue
+      bchunk homm2.gog img.cue img > /dev/null
+      bsdtar -x -f img01.iso -C ANIM --include "HEROES2/ANIM/*" --strip-components=2
+      rm img01.iso img.cue homm2.gog
+    fi
+    
     /app/bin/fheroes2
   fi
   if [[ $ans == *"demo"* ]]; then
