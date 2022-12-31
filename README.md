@@ -7,10 +7,7 @@ It is therefore strongly recommended to extract the files from a purchased versi
 
 The easiest way is the installation via the GOG version. Just download the EXE file and select it.
 
-Alternatively, the files can also be installed manually. In this case you need to copy (no symlink) the 'ANIM', 'DATA', 'MAPS' and 'MUSIC' folders from Heroes II to the fheroes2 folder.
+For other installation methods see: [Installation Guide](https://github.com/ihhub/fheroes2/blob/master/docs/INSTALL.md)
 
-For example:
-- ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/ANIM
-- ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/DATA
-- ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/MAPS
-- ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/MUSIC
+## License
+**Attention**: License (MIT) is only valid for files in this repository!
