@@ -34,6 +34,7 @@ else
       --include ANIM \
       --include SOUND \
       --include homm2.gog \
+      --include homm2.ins \
       $file
     if [[ $? -ne 0 ]]; then
       zenity --error --text "Extraction failed!"
@@ -48,10 +49,10 @@ else
     if ls homm2.gog 2> /dev/null ;
     then
       mkdir ANIM
-      printf 'FILE "homm2.gog" BINARY\n  TRACK 01 MODE2/2352\n    INDEX 01 00:00:00' > img.cue
+      head -n 3 homm2.ins > img.cue
       bchunk homm2.gog img.cue img > /dev/null
       bsdtar -x -f img01.iso -C ANIM --include "HEROES2/ANIM/*" --strip-components=2
-      rm img01.iso img.cue homm2.gog
+      rm img01.iso img.cue homm2.gog homm2.ins
     fi
     
     /app/bin/fheroes2
