@@ -12,7 +12,7 @@ finish-args:
   # File Manager
   - --talk-name=org.freedesktop.FileManager1.*
 command: fheroes2.sh
-rename-appdata-file: fheroes2.appdata.xml
+rename-appdata-file: test_fheroes2.appdata.xml
 rename-desktop-file: fheroes2.desktop
 rename-icon: fheroes2
 copy-icon: true
@@ -24,6 +24,7 @@ modules:
     post-install:
       - desktop-file-edit --set-key=Exec --set-value=fheroes2.sh ${FLATPAK_DEST}/share/applications/fheroes2.desktop
       - install -Dm 744 fheroes2.sh -t /app/bin
+      - install -Dm644 test_fheroes2.appdata.xml /app/share/metainfo/test_fheroes2.appdata.xml
     sources:
       - type: git
         url: https://github.com/ihhub/fheroes2
@@ -37,6 +38,9 @@ modules:
         url: https://archive.org/download/HeroesofMightandMagicIITheSuccessionWars_1020/h2demo.zip
         sha256: 12048c8b03875c81e69534a3813aaf6340975e77b762dc1b79a4ff5514240e3c
         size: 21848903
+      - type: file
+        path: test_fheroes2.appdata.xml
+        dest-filename: test_fheroes2.appdata.xml
       - type: file
         path: fheroes2.sh
         dest-filename: fheroes2.sh
