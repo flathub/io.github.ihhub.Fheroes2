@@ -1,5 +1,7 @@
 #!/bin/sh
 
+export TIMIDITY_CFG=/app/etc/timidity.cfg
+
 if ls ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/*[Dd][Aa][Tt][Aa]*/HEROES2.AGG 2> /dev/null ;
 then
   # show extra message when demo installed
