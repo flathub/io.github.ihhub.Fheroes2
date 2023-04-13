@@ -48,6 +48,11 @@ modules:
       - ./bootstrap.sh --prefix=/app --with-libraries=program_options,filesystem,system,thread,locale,date_time,atomic,iostreams
       - ./b2
       - ./b2 install
+    cleanup:
+      - /include
+      - /lib/cmake
+      - /lib/*.a
+      - /lib/*.so
     sources:
       - sha256: 71feeed900fbccca04a3b4f2f84a7c217186f28a940ed8b7ed4725986baf99fa
         type: archive
@@ -59,6 +64,8 @@ modules:
           url-template: https://boostorg.jfrog.io/artifactory/main/release/$version/source/boost_${major}_${minor}_$patch.tar.bz2
   - name: innoextract
     buildsystem: cmake-ninja
+    cleanup:
+      - /share/man
     sources:
       - type: archive
         url: https://github.com/dscharrer/innoextract/releases/download/1.9/innoextract-1.9.tar.gz
