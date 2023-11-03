@@ -12,7 +12,7 @@ finish-args:
   # File Manager
   - --talk-name=org.freedesktop.FileManager1.*
 command: fheroes2.sh
-rename-appdata-file: fheroes2.appdata.xml
+rename-appdata-file: fheroes2.metainfo.xml
 rename-desktop-file: fheroes2.desktop
 rename-icon: fheroes2
 copy-icon: true
