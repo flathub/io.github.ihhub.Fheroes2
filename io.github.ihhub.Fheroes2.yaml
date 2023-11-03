@@ -12,7 +12,7 @@ finish-args:
   # File Manager
   - --talk-name=org.freedesktop.FileManager1.*
 command: fheroes2.sh
-rename-appdata-file: fheroes2.appdata.xml
+rename-appdata-file: fheroes2.metainfo.xml
 rename-desktop-file: fheroes2.desktop
 rename-icon: fheroes2
 copy-icon: true
@@ -35,6 +35,7 @@ modules:
         x-checker-data:
           type: git
           tag-pattern: ^([\d.]+)$
+        commit: dd593177cbd2cbf4ec126b5997aee758a088aa12
       - type: extra-data
         filename: h2demo.zip
         url: https://archive.org/download/HeroesofMightandMagicIITheSuccessionWars_1020/h2demo.zip
