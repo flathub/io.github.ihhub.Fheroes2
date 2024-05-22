@@ -60,11 +60,12 @@ modules:
       - sha256: cc4b893acf645c9d4b698e9a0f08ca8846aa5d6c68275c14c3e7949c24109454
         type: archive
         url: https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.bz2
-        x-checker-data:
-          type: anitya
-          project-id: 6845
-          stable-only: true
-          url-template: https://boostorg.jfrog.io/artifactory/main/release/$version/source/boost_${major}_${minor}_$patch.tar.bz2
+# do not update boost to 1.85 until new innoextract version released
+#        x-checker-data:
+#          type: anitya
+#          project-id: 6845
+#          stable-only: true
+#          url-template: https://boostorg.jfrog.io/artifactory/main/release/$version/source/boost_${major}_${minor}_$patch.tar.bz2
   - name: innoextract
     buildsystem: cmake-ninja
     cleanup:
