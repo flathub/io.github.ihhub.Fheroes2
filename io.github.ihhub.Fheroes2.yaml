@@ -30,8 +30,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/ihhub/fheroes2
-        tag: 1.0.13
-        commit: 730031d12ca125a56058b04fbe2aecbc14ecf435
+        tag: 1.1.0
+        commit: da71bd697616b4c84d0e76b7df3500abd8a8b960
         x-checker-data:
           type: git
           tag-pattern: ^([\d.]+)$
@@ -57,9 +57,9 @@ modules:
       - /lib/*.a
       - /lib/*.so
     sources:
-      - sha256: cc4b893acf645c9d4b698e9a0f08ca8846aa5d6c68275c14c3e7949c24109454
+      - sha256: 7009fe1faa1697476bdc7027703a2badb84e849b7b0baad5086b087b971f8617
         type: archive
-        url: https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.bz2
+        url: https://boostorg.jfrog.io/artifactory/main/release/1.85.0/source/boost_1_85_0.tar.bz2
         x-checker-data:
           type: anitya
           project-id: 6845
