@@ -35,12 +35,11 @@ modules:
         x-checker-data:
           type: git
           tag-pattern: ^([\d.]+)$
-# diable demo until archive.org is available again
-#      - type: extra-data
-#        filename: h2demo.zip
-#        url: https://archive.org/download/HeroesofMightandMagicIITheSuccessionWars_1020/h2demo.zip
-#        sha256: 12048c8b03875c81e69534a3813aaf6340975e77b762dc1b79a4ff5514240e3c
-#        size: 21848903
+      - type: extra-data
+        filename: h2demo.zip
+        url: https://archive.org/download/HeroesofMightandMagicIITheSuccessionWars_1020/h2demo.zip
+        sha256: 12048c8b03875c81e69534a3813aaf6340975e77b762dc1b79a4ff5514240e3c
+        size: 21848903
       - type: file
         path: fheroes2.sh
         dest-filename: fheroes2.sh
