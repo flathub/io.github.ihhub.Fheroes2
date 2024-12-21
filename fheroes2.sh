@@ -67,7 +67,9 @@ else
   fi
   if [[ $ans == *"demo"* ]]; then
     # just unzip the demo
-    unzip -o -q /app/extra/h2demo.zip "DATA/*" "MAPS/*" -d ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2
+    wget https://archive.org/download/HeroesofMightandMagicIITheSuccessionWars_1020/h2demo.zip
+    unzip -o -q h2demo.zip "DATA/*" "MAPS/*" -d ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2
+    rm h2demo.zip
     fheroes2
   fi
   if [[ $ans == *"Manual"* ]]; then
