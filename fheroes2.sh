@@ -2,15 +2,19 @@
 
 export TIMIDITY_CFG=/app/etc/timidity.cfg
 
-if ls ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/*[Dd][Aa][Tt][Aa]*/HEROES2.AGG 2> /dev/null ;
+HEROES2_RESOURCES_PATH="$HOME/.var/app/io.github.ihhub.Fheroes2/data/fheroes2"
+HEROES2_DATA_PATH=$(find "$HEROES2_RESOURCES_PATH" -maxdepth 1 -type d -iname DATA)
+HEROES2_AGG_PATH=$(find "$HEROES2_DATA_PATH" -maxdepth 1 -type f -iname HEROES2.AGG 2> /dev/null)
+if [[ -n "$HEROES2_AGG_PATH" ]];
 then
   # show extra message when demo installed
-  if ls ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/*[Dd][Aa][Tt][Aa]*/H2OFFER.SMK 2> /dev/null ;
+  HEROES2_OFFER_PATH=$(find "$HEROES2_DATA_PATH" -type f -iname H2OFFER.SMK)
+  if [[ -n "$HEROES2_OFFER_PATH" ]];
   then
     if zenity --question --text "Only the demo installed.\nWill be started automatically in 5 sec." --cancel-label "Start demo" --ok-label "Install full version" --timeout 5 ;
     then
       # remove demo files and restart
-      rm -rf ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/DATA
+      rm -rf "$HEROES2_RESOURCES_PATH/DATA"
       fheroes2.sh && exit
     else
       fheroes2
@@ -31,7 +35,7 @@ else
   if [[ $ans == *"GOG"* ]]; then
     file=$(zenity --file-selection --title="Select installer from GOG (*.EXE)")
     # extract files from exe
-    innoextract --gog --output-dir ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2 \
+    innoextract --gog --output-dir $HEROES2_RESOURCES_PATH \
       --include DATA \
       --include GAMES \
       --include MAPS \
@@ -46,14 +50,14 @@ else
       exit 1
     fi
     # some exe needs to move file from "app" folder
-    mv ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/app/* ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/ 2> /dev/null
-    rm -rf ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/app/ 2> /dev/null
+    mv $HEROES2_RESOURCES_PATH/app/* $HEROES2_RESOURCES_PATH/ 2> /dev/null
+    rm -rf $HEROES2_RESOURCES_PATH/app/ 2> /dev/null
     # some exe have the "ANIM" in a "HEROES2 subfolder
-    mv ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/HEROES2/* ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/ 2> /dev/null
-    rm -rf ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/HEROES2/ 2> /dev/null
+    mv $HEROES2_RESOURCES_PATH/HEROES2/* $HEROES2_RESOURCES_PATH/ 2> /dev/null
+    rm -rf $HEROES2_RESOURCES_PATH/HEROES2/ 2> /dev/null
     
     #extract "ANIM" from bin/cue if exists
-    cd ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/
+    cd $HEROES2_RESOURCES_PATH
     if ls homm2.gog 2> /dev/null ;
     then
       mkdir ANIM
@@ -68,19 +72,19 @@ else
   if [[ $ans == *"demo"* ]]; then
     # just unzip the demo
     wget https://archive.org/download/HeroesofMightandMagicIITheSuccessionWars_1020/h2demo.zip
-    unzip -o -q h2demo.zip "DATA/*" "MAPS/*" -d ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2
+    unzip -o -q h2demo.zip "DATA/*" "MAPS/*" -d $HEROES2_RESOURCES_PATH
     rm h2demo.zip
     fheroes2
   fi
   if [[ $ans == *"Manual"* ]]; then
     zenity --info \
-      --text "You will need to copy the 'ANIM', 'DATA', 'MAPS' and 'MUSIC' folders from Heroes II to the fheroes2 folder.\n\nFor example:\n~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/ANIM\n~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/DATA\n~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/MAPS\n~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2/MUSIC" \
+      --text "You will need to copy the 'ANIM', 'DATA', 'MAPS' and 'MUSIC' folders from Heroes II to the fheroes2 folder.\n\nFor example:\n$HEROES2_RESOURCES_PATH/ANIM\n$HEROES2_RESOURCES_PATH/DATA\n$HEROES2_RESOURCES_PATH/MAPS\n$HEROES2_RESOURCES_PATH/MUSIC" \
       --ok-label "Open folder"
-    mkdir -p ~/.var/app/io.github.ihhub.Fheroes2/data/fheroes2
+    mkdir -p $HEROES2_RESOURCES_PATH
     
     # open file manager
     dbus-send --session --print-reply --dest=org.freedesktop.FileManager1 \
       --type=method_call /org/freedesktop/FileManager1 org.freedesktop.FileManager1.ShowFolders \
-        array:string:"file://$HOME/.var/app/io.github.ihhub.Fheroes2/data/fheroes2" string:""
+        array:string:"file://$HEROES2_RESOURCES_PATH" string:""
   fi
 fi
