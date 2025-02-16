@@ -26,14 +26,14 @@ modules:
     post-install:
       - desktop-file-edit --set-key=Exec --set-value=fheroes2.sh ${FLATPAK_DEST}/share/applications/fheroes2.desktop
       - install -Dm 744 fheroes2.sh -t /app/bin
-      - install -Dm 644 android/app/src/main/assets/timidity.cfg -t ${FLATPAK_DEST}/etc
-      - install -Dm 644 android/app/src/main/assets/instruments/* -t ${FLATPAK_DEST}/etc/instruments
+      - install -Dm 644 files/timidity/timidity.cfg -t ${FLATPAK_DEST}/etc
+      - install -Dm 644 files/timidity/instruments/* -t ${FLATPAK_DEST}/etc/instruments
 
     sources:
       - type: git
         url: https://github.com/ihhub/fheroes2
-        tag: 1.1.5
-        commit: 22556eb28eb0fb4d48b28cf9dfa816b9353a4810
+        tag: 1.1.6
+        commit: 0e61e335eed3d0462180f601b59d73b5645e9ac3
         x-checker-data:
           type: git
           tag-pattern: ^([\d.]+)$
@@ -56,13 +56,13 @@ modules:
     sources:
       - sha256: cc4b893acf645c9d4b698e9a0f08ca8846aa5d6c68275c14c3e7949c24109454
         type: archive
-        url: https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.bz2
+        url: https://archives.boost.io/release/1.84.0/source/boost_1_84_0.tar.bz2
 # do not update boost to 1.85 until new innoextract version released
 #        x-checker-data:
 #          type: anitya
 #          project-id: 6845
 #          stable-only: true
-#          url-template: https://boostorg.jfrog.io/artifactory/main/release/$version/source/boost_${major}_${minor}_$patch.tar.bz2
+#          url-template: https://archives.boost.io/release/$version/source/boost_${major}_${minor}_$patch.tar.bz2
   - name: innoextract
     buildsystem: cmake-ninja
     cleanup:
