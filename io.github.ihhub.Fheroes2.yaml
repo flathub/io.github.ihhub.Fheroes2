@@ -26,8 +26,8 @@ modules:
     post-install:
       - desktop-file-edit --set-key=Exec --set-value=fheroes2.sh ${FLATPAK_DEST}/share/applications/fheroes2.desktop
       - install -Dm 744 fheroes2.sh -t /app/bin
-      - install -Dm 644 android/app/src/main/assets/timidity.cfg -t ${FLATPAK_DEST}/etc
-      - install -Dm 644 android/app/src/main/assets/instruments/* -t ${FLATPAK_DEST}/etc/instruments
+      - install -Dm 644 files/timidity/timidity.cfg -t ${FLATPAK_DEST}/etc
+      - install -Dm 644 files/timidity/instruments/* -t ${FLATPAK_DEST}/etc/instruments
 
     sources:
       - type: git
