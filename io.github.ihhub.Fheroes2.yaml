@@ -3,7 +3,10 @@ runtime: org.freedesktop.Platform
 runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
 finish-args:
-  - --device=all
+  # Input devices such as controllers
+  - --device=input
+  # Direct Rendering Interface. Necessary for GL.
+  - --device=dri
   # X11 + XShm access
   - --share=ipc
   - --socket=x11
