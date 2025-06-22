@@ -16,6 +16,8 @@ finish-args:
   - --talk-name=org.freedesktop.FileManager1.*
   # Network for demo download
   - --share=network
+  # The minimum required version of installed Flatpak.
+  --require-version=1.16
 command: fheroes2.sh
 rename-appdata-file: fheroes2.metainfo.xml
 rename-desktop-file: fheroes2.desktop
