@@ -3,7 +3,10 @@ runtime: org.freedesktop.Platform
 runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
 finish-args:
-  - --device=all
+  # Input devices such as controllers
+  - --device=input
+  # Direct Rendering Interface. Necessary for GL.
+  - --device=dri
   # X11 + XShm access
   - --share=ipc
   - --socket=x11
@@ -13,6 +16,8 @@ finish-args:
   - --talk-name=org.freedesktop.FileManager1.*
   # Network for demo download
   - --share=network
+  # The minimum required version of installed Flatpak.
+  - --require-version=1.16.0
 command: fheroes2.sh
 rename-appdata-file: fheroes2.metainfo.xml
 rename-desktop-file: fheroes2.desktop
