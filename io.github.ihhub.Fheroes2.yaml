@@ -32,11 +32,11 @@ modules:
     sources:
       - type: git
         url: https://github.com/ihhub/fheroes2
-        commit: ce4a8837758862894796338b85a14c729cce1aac
+        commit: 33190eed8ab9f12ae5a8b74468cefac1fc346e8b
         x-checker-data:
           type: git
           tag-pattern: ^([\d.]+)$
-        tag: 1.1.14
+        tag: 1.1.15
       - type: file
         path: fheroes2.sh
         dest-filename: fheroes2.sh
