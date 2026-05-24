@@ -1,7 +1,12 @@
 app-id: io.github.ihhub.Fheroes2
 runtime: org.freedesktop.Platform
-runtime-version: '24.08'
+runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
+command: fheroes2.sh
+rename-appdata-file: fheroes2.metainfo.xml
+rename-desktop-file: fheroes2.desktop
+rename-icon: fheroes2
+copy-icon: true
 finish-args:
   - --device=all
   # X11 + XShm access
@@ -13,69 +18,13 @@ finish-args:
   - --talk-name=org.freedesktop.FileManager1.*
   # Network for demo download
   - --share=network
-command: fheroes2.sh
-rename-appdata-file: fheroes2.metainfo.xml
-rename-desktop-file: fheroes2.desktop
-rename-icon: fheroes2
-copy-icon: true
+cleanup:
+  - /share/doc
+  - /share/man
+
 modules:
-  - name: fheroes2
-    buildsystem: cmake-ninja
-    config-opts:
-      - -DSDL2MAIN_LIBRARY=
-    post-install:
-      - desktop-file-edit --set-key=Exec --set-value=fheroes2.sh ${FLATPAK_DEST}/share/applications/fheroes2.desktop
-      - install -Dm 744 fheroes2.sh -t /app/bin
-      - install -Dm 644 files/timidity/timidity.cfg -t ${FLATPAK_DEST}/etc
-      - install -Dm 644 files/timidity/instruments/* -t ${FLATPAK_DEST}/etc/instruments
+  - innoextract.yml
 
-    sources:
-      - type: git
-        url: https://github.com/ihhub/fheroes2
-        commit: c47681081d62133c34ab357606e31d2f60ab44d3
-        x-checker-data:
-          type: git
-          tag-pattern: ^([\d.]+)$
-        tag: 1.1.16
-      - type: file
-        path: fheroes2.sh
-        dest-filename: fheroes2.sh
-
-  # innoextract dependency
-  - name: boost
-    buildsystem: simple
-    build-commands:
-      - ./bootstrap.sh --prefix=/app --with-libraries=program_options,filesystem,system,thread,locale,date_time,atomic,iostreams
-      - ./b2
-      - ./b2 install
-    cleanup:
-      - /include
-      - /lib/cmake
-      - /lib/*.a
-      - /lib/*.so
-    sources:
-      - sha256: cc4b893acf645c9d4b698e9a0f08ca8846aa5d6c68275c14c3e7949c24109454
-        type: archive
-        url: https://archives.boost.io/release/1.84.0/source/boost_1_84_0.tar.bz2
-# do not update boost to 1.85 until new innoextract version released
-#        x-checker-data:
-#          type: anitya
-#          project-id: 6845
-#          stable-only: true
-#          url-template: https://archives.boost.io/release/$version/source/boost_${major}_${minor}_$patch.tar.bz2
-  - name: innoextract
-    buildsystem: cmake-ninja
-    cleanup:
-      - /share/man
-    sources:
-      - type: archive
-        url: https://github.com/dscharrer/innoextract/releases/download/1.9/innoextract-1.9.tar.gz
-        sha256: 6344a69fc1ed847d4ed3e272e0da5998948c6b828cb7af39c6321aba6cf88126
-        x-checker-data:
-          type: anitya
-          project-id: 8646
-          stable-only: true
-          url-template: https://github.com/dscharrer/innoextract/releases/download/$version/innoextract-$version.tar.gz
   - name: bchunk
     buildsystem: simple
     build-commands:
@@ -89,3 +38,24 @@ modules:
         x-checker-data:
           type: git
           tag-pattern: ^.*?([\d.]+)$
+
+  - name: fheroes2
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DSDL2MAIN_LIBRARY=
+    post-install:
+      - desktop-file-edit --set-key=Exec --set-value=fheroes2.sh ${FLATPAK_DEST}/share/applications/fheroes2.desktop
+      - install -Dm 744 fheroes2.sh -t /app/bin
+      - install -Dm 644 files/timidity/timidity.cfg -t ${FLATPAK_DEST}/etc
+      - install -Dm 644 files/timidity/instruments/* -t ${FLATPAK_DEST}/etc/instruments
+    sources:
+      - type: git
+        url: https://github.com/ihhub/fheroes2
+        tag: 1.1.16
+        commit: c47681081d62133c34ab357606e31d2f60ab44d3
+        x-checker-data:
+          is-main-source: true
+          type: git
+      - type: file
+        path: fheroes2.sh
+        dest-filename: fheroes2.sh

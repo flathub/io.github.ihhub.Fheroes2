@@ -1,0 +1,38 @@
+# Source: https://github.com/flathub/com.valvesoftware.Steam.Utility.steamtinkerlaunch/blob/e73c48175dbe71a4862eb20fd67466c2314e2492/modules/innoextract.yml#L2
+name: innoextract
+buildsystem: cmake-ninja
+build-options:
+  env:
+    CMAKE_POLICY_VERSION_MINIMUM: 3.5
+sources:
+  - type: archive
+    url: https://github.com/dscharrer/innoextract/releases/download/1.9/innoextract-1.9.tar.gz
+    sha256: 6344a69fc1ed847d4ed3e272e0da5998948c6b828cb7af39c6321aba6cf88126
+    x-checker-data:
+      type: anitya
+      project-id: 8646
+      stable-only: true
+      url-template: https://github.com/dscharrer/innoextract/releases/download/$version/innoextract-$version.tar.gz
+  # Patch innoextract failing to build with boost 1.85+: https://github.com/dscharrer/innoextract/pull/169
+  - type: patch
+    path: patches/innoextract-169.patch
+  # Patch innoextract failing to build with boost 1.89+: https://github.com/dscharrer/innoextract/pull/199
+  - type: patch
+    path: patches/innoextract-199.patch
+modules:
+  - name: boost
+    buildsystem: simple
+    build-commands:
+      - ./bootstrap.sh --prefix=${FLATPAK_DEST} --with-libraries=date_time,filesystem,iostreams,program_options
+      - ./b2 -j$FLATPAK_BUILDER_N_JOBS install
+    cleanup:
+      - "*"
+    sources:
+      - type: archive
+        url: https://archives.boost.io/release/1.91.0/source/boost_1_91_0.tar.gz
+        sha256: 5734305f40a76c30f951c9abd409a45a2a19fb546efe4162119250bbe4d3a463
+        x-checker-data:
+          type: anitya
+          project-id: 6845
+          stable-only: true
+          url-template: https://archives.boost.io/release/$version/source/boost_${major}_${minor}_${patch}.tar.gz
