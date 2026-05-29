@@ -4,6 +4,8 @@ buildsystem: cmake-ninja
 build-options:
   env:
     CMAKE_POLICY_VERSION_MINIMUM: 3.5
+config-opts:
+  - -DBoost_USE_STATIC_LIBS=ON
 sources:
   - type: archive
     url: https://github.com/dscharrer/innoextract/releases/download/1.9/innoextract-1.9.tar.gz
@@ -24,7 +26,7 @@ modules:
     buildsystem: simple
     build-commands:
       - ./bootstrap.sh --prefix=${FLATPAK_DEST} --with-libraries=date_time,filesystem,iostreams,program_options
-      - ./b2 -j$FLATPAK_BUILDER_N_JOBS install
+      - ./b2 -j$FLATPAK_BUILDER_N_JOBS link=static install
     cleanup:
       - "*"
     sources:
