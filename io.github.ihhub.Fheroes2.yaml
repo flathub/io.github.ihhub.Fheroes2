@@ -85,6 +85,30 @@ modules:
           type: git
           tag-pattern: ^.*?([\d.]+)$
 
+  # freedesktop-sdk 26.08 no longer ships SDL2_mixer (replaced by SDL3_mixer),
+  # but fheroes2 only supports SDL2. SDL2 itself still comes from
+  # sdl2-compat in the SDK.
+  # Source: https://github.com/flathub/shared-modules/blob/master/SDL2/SDL2_mixer.json
+  - name: SDL2_mixer
+    buildsystem: cmake-ninja
+    builddir: true
+    config-opts:
+      - -DSDL2MIXER_MOD=OFF
+      - -DSDL2MIXER_MIDI=OFF
+    cleanup:
+      - /include
+      - /lib/cmake
+      - /lib/pkgconfig
+    sources:
+      - type: archive
+        url: https://github.com/libsdl-org/SDL_mixer/releases/download/release-2.8.2/SDL2_mixer-2.8.2.tar.gz
+        sha256: 938dff531d00ace2296557a6599abe6f34599e2f34f0a4a08a397e2ccac8b8f7
+        x-checker-data:
+          type: anitya
+          project-id: 389478
+          stable-only: true
+          url-template: https://github.com/libsdl-org/SDL_mixer/releases/download/release-$version/SDL2_mixer-$version.tar.gz
+
   - name: fheroes2
     buildsystem: cmake-ninja
     config-opts:
