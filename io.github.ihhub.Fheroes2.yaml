@@ -1,6 +1,6 @@
 app-id: io.github.ihhub.Fheroes2
 runtime: org.freedesktop.Platform
-runtime-version: '25.08'
+runtime-version: '26.08'
 sdk: org.freedesktop.Sdk
 command: fheroes2.sh
 rename-appdata-file: fheroes2.metainfo.xml
@@ -8,10 +8,17 @@ rename-desktop-file: fheroes2.desktop
 rename-icon: fheroes2
 copy-icon: true
 finish-args:
-  - --device=all
+  # Input devices such as controllers
+  - --device=input
+  # Direct Rendering Interface. Necessary for GL.
+  - --device=dri
+  # Fallback to all devices on Flatpak versions without input device support
+  - --device-if=all:!has-input-device
+  # Wayland access with X11 fallback
+  - --socket=wayland
+  - --socket=fallback-x11
   # X11 + XShm access
   - --share=ipc
-  - --socket=x11
   # Pulseaudio access
   - --socket=pulseaudio
   # File Manager
@@ -23,7 +30,46 @@ cleanup:
   - /share/man
 
 modules:
-  - innoextract.yml
+  # Source: https://github.com/flathub/com.valvesoftware.Steam.Utility.steamtinkerlaunch/blob/e73c48175dbe71a4862eb20fd67466c2314e2492/modules/innoextract.yml#L2
+  - name: innoextract
+    buildsystem: cmake-ninja
+    build-options:
+      env:
+        CMAKE_POLICY_VERSION_MINIMUM: 3.5
+    config-opts:
+      - -DBoost_USE_STATIC_LIBS=ON
+    sources:
+      - type: archive
+        url: https://github.com/dscharrer/innoextract/releases/download/1.9/innoextract-1.9.tar.gz
+        sha256: 6344a69fc1ed847d4ed3e272e0da5998948c6b828cb7af39c6321aba6cf88126
+        x-checker-data:
+          type: anitya
+          project-id: 8646
+          stable-only: true
+          url-template: https://github.com/dscharrer/innoextract/releases/download/$version/innoextract-$version.tar.gz
+      # Patch innoextract failing to build with boost 1.85+: https://github.com/dscharrer/innoextract/pull/169
+      - type: patch
+        path: patches/innoextract-169.patch
+      # Patch innoextract failing to build with boost 1.89+: https://github.com/dscharrer/innoextract/pull/199
+      - type: patch
+        path: patches/innoextract-199.patch
+    modules:
+      - name: boost
+        buildsystem: simple
+        build-commands:
+          - ./bootstrap.sh --prefix=${FLATPAK_DEST} --with-libraries=date_time,filesystem,iostreams,program_options
+          - ./b2 -j$FLATPAK_BUILDER_N_JOBS link=static install
+        cleanup:
+          - "*"
+        sources:
+          - type: archive
+            url: https://archives.boost.io/release/1.91.0/source/boost_1_91_0.tar.gz
+            sha256: 5734305f40a76c30f951c9abd409a45a2a19fb546efe4162119250bbe4d3a463
+            x-checker-data:
+              type: anitya
+              project-id: 6845
+              stable-only: true
+              url-template: https://archives.boost.io/release/$version/source/boost_${major}_${minor}_${patch}.tar.gz
 
   - name: bchunk
     buildsystem: simple
@@ -38,6 +84,30 @@ modules:
         x-checker-data:
           type: git
           tag-pattern: ^.*?([\d.]+)$
+
+  # freedesktop-sdk 26.08 no longer ships SDL2_mixer (replaced by SDL3_mixer),
+  # but fheroes2 only supports SDL2. SDL2 itself still comes from
+  # sdl2-compat in the SDK.
+  # Source: https://github.com/flathub/shared-modules/blob/master/SDL2/SDL2_mixer.json
+  - name: SDL2_mixer
+    buildsystem: cmake-ninja
+    builddir: true
+    config-opts:
+      - -DSDL2MIXER_MOD=OFF
+      - -DSDL2MIXER_MIDI=OFF
+    cleanup:
+      - /include
+      - /lib/cmake
+      - /lib/pkgconfig
+    sources:
+      - type: archive
+        url: https://github.com/libsdl-org/SDL_mixer/releases/download/release-2.8.2/SDL2_mixer-2.8.2.tar.gz
+        sha256: 938dff531d00ace2296557a6599abe6f34599e2f34f0a4a08a397e2ccac8b8f7
+        x-checker-data:
+          type: anitya
+          project-id: 389478
+          stable-only: true
+          url-template: https://github.com/libsdl-org/SDL_mixer/releases/download/release-$version/SDL2_mixer-$version.tar.gz
 
   - name: fheroes2
     buildsystem: cmake-ninja
