@@ -63,8 +63,8 @@ modules:
           - "*"
         sources:
           - type: archive
-            url: https://archives.boost.io/release/1.91.0/source/boost_1_91_0.tar.gz
-            sha256: 5734305f40a76c30f951c9abd409a45a2a19fb546efe4162119250bbe4d3a463
+            url: https://archives.boost.io/release/1.92.0/source/boost_1_92_0.tar.gz
+            sha256: c4a3b310ddd2472416e091067166b0713be97c63f38c212c484ada022fd296ce
             x-checker-data:
               type: anitya
               project-id: 6845
@@ -121,8 +121,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/ihhub/fheroes2
-        tag: 1.1.17
-        commit: 2685c2188b541660f1ce261b554c3e92f79b1775
+        tag: 1.1.18
+        commit: 9280fe5ee3af2cfc1036a0fa1c1e69eeb1b11f59
         x-checker-data:
           is-main-source: true
           type: git
